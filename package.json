@@ -1,0 +1,27 @@
+{
+  "name": "timers-manager",
+  "version": "1.0.0",
+  "description": "A utility for managing timers in Node.js app",
+  "main": "timersManager.js",
+  "scripts": {
+    "start": "node ./src/index.js",
+    "test": "jest",
+    "lint": "eslint src/",
+    "dev": "node --watch src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/valentinfltv/node-timers-manager.git"
+  },
+  "keywords": [],
+  "author": "valentinfltv@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/valentinfltv/node-timers-manager/issues"
+  },
+  "homepage": "https://github.com/valentinfltv/node-timers-manager#readme",
+  "devDependencies": {
+    "eslint": "^9.33.0",
+    "jest": "^30.0.5"
+  }
+}
