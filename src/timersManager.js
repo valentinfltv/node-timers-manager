@@ -1,20 +1,22 @@
 class TimersManager {
- constructor() {
-   this.timers = [];
-   this.started = false;
- }
+  constructor() {
+    this.timers = [];
+    this.started = false;
+  }
 
- _validateTimer(timer) {
+  _validateTimer(timer) {
     if (!timer || typeof timer !== 'object') throw new Error("Timer must be an object");
     const { name, delay, interval, job } = timer; //get object fields from timer obj in one line 
 
+    const { DELAY_MIN, DELAY_MAX } = require('./config')
+
     if (typeof name !== 'string' || name.trim() === '') throw new Error("Invalid timer name");
-    if (typeof delay !== 'number' || delay < 0 || delay > 5000) throw new Error("Invalid delay");
+    if (typeof delay !== 'number' || delay < DELAY_MIN || delay > DELAY_MAX) throw new Error("Invalid delay");
     if (typeof interval !== 'boolean') throw new Error("Invalid interval flag");
     if (typeof job !== 'function') throw new Error("Invalid job function");
   }
 
- add(timer, ...args) {
+  add(timer, ...args) {
     if (this.started) throw new Error("Cannot add timer after start");
     this._validateTimer(timer);
 
@@ -35,7 +37,7 @@ class TimersManager {
     return this; // allow chaining
   }
 
- remove(name) {
+  remove(name) {
     const index = this.timers.findIndex(t => t.name === name);
     if (index === -1) return;
 
@@ -50,7 +52,7 @@ class TimersManager {
     this.timers.splice(index, 1); // remove from array
   }
 
- start() {
+  start() {
     if (this.started) return;
     this.started = true;
 
@@ -59,7 +61,7 @@ class TimersManager {
     }
   }
 
- _runTimer(timer) {
+  _runTimer(timer) {
     timer.startTime = Date.now();
 
     const execute = () => {
@@ -80,7 +82,7 @@ class TimersManager {
     }
   }
 
- stop() {
+  stop() {
     for (const timer of this.timers) {
       if (timer.interval) {
         clearInterval(timer.id);
@@ -106,7 +108,7 @@ class TimersManager {
     timer.paused = true;
   }
 
- resume(name) {
+  resume(name) {
     const timer = this.timers.find(t => t.name === name);
     if (!timer || timer.interval || !timer.paused) return;
 
